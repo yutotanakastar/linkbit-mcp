@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "linkbit": {
+      "command": "npx",
+      "args": ["-y", "linkbit-mcp"],
+      "env": {
+        "APP_URL": "https://linkbit.live",
+        "API_KEY": "slk_paste_your_key_here"
+      }
+    }
+  }
+}

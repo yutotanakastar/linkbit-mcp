@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.yutotanakastar/linkbit-mcp",
+  "title": "LinkBit",
+  "description": "Shorten URLs, bulk create, QR, and click analytics for LinkBit.",
+  "websiteUrl": "https://linkbit.live/mcp",
+  "repository": {
+    "url": "https://github.com/yutotanakastar/linkbit-mcp",
+    "source": "github"
+  },
+  "version": "1.0.2",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "linkbit-mcp",
+      "version": "1.0.2",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "API_KEY",
+          "description": "LinkBit API key (slk_...)",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "APP_URL",
+          "description": "API origin, default https://linkbit.live",
+          "isRequired": false,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}

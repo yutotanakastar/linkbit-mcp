@@ -1,0 +1,37 @@
+{
+  "name": "linkbit-mcp",
+  "version": "1.0.2",
+  "description": "MCP server for LinkBit URL shortener: shorten links, bulk create, and get click analytics from Claude, ChatGPT, Cursor and n8n.",
+  "type": "module",
+  "mcpName": "io.github.yutotanakastar/linkbit-mcp",
+  "bin": {
+    "linkbit-mcp": "./src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "files": [
+    "src",
+    "server.json"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "Yuto Tanaka <youdododododo@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/yutotanakastar/linkbit-mcp/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yutotanakastar/linkbit-mcp.git"
+  },
+  "homepage": "https://linkbit.live/mcp",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "linkbit",
+    "url-shortener",
+    "link-shortener"
+  ]
+}
