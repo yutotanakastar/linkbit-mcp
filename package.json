@@ -1,18 +1,20 @@
 {
   "name": "linkbit-mcp",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "MCP server for LinkBit URL shortener: shorten links, bulk create, and get click analytics from Claude, ChatGPT, Cursor and n8n.",
   "type": "module",
   "mcpName": "io.github.yutotanakastar/linkbit-mcp",
   "bin": {
-    "linkbit-mcp": "./src/index.js"
+    "linkbit-mcp": "cli.js"
   },
   "scripts": {
     "start": "node src/index.js"
   },
   "files": [
+    "cli.js",
     "src",
-    "server.json"
+    "server.json",
+    "lhm.plugin.json"
   ],
   "engines": {
     "node": ">=18"

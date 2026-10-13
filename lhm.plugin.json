@@ -1,0 +1,298 @@
+{
+  "author": "Yuto Tanaka",
+  "authorUrl": "https://github.com/yutotanakastar",
+  "category": "productivity",
+  "description": "Shorten URLs, bulk-create links, generate QR codes, and read click analytics for LinkBit. Requires an slk_ API key from linkbit.live.",
+  "homepage": "https://linkbit.live/mcp",
+  "identifier": "yutotanakastar-linkbit-mcp",
+  "name": "LinkBit",
+  "prompts": [],
+  "resources": [],
+  "tags": [
+    "linkbit",
+    "url-shortener",
+    "link-shortener",
+    "analytics",
+    "qr",
+    "utm",
+    "mcp"
+  ],
+  "tools": [
+    {
+      "name": "shorten_url",
+      "description": "Create a short URL. Optional UTM fields are merged without overwriting existing utm_* params.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "destination": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "utm_source": {
+            "type": "string"
+          },
+          "utm_medium": {
+            "type": "string"
+          },
+          "utm_campaign": {
+            "type": "string"
+          },
+          "utm_term": {
+            "type": "string"
+          },
+          "utm_content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "destination"
+        ]
+      },
+      "annotations": {
+        "title": "Shorten URL",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "shorten_urls",
+      "description": "Bulk-create short URLs. Each item may include slug and utm_* fields.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "urls": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "destination": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "utm_source": {
+                  "type": "string"
+                },
+                "utm_medium": {
+                  "type": "string"
+                },
+                "utm_campaign": {
+                  "type": "string"
+                },
+                "utm_term": {
+                  "type": "string"
+                },
+                "utm_content": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "destination"
+              ]
+            }
+          }
+        },
+        "required": [
+          "urls"
+        ]
+      },
+      "annotations": {
+        "title": "Shorten URLs",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_links",
+      "description": "List the authenticated user's short links.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "title": "List links",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "update_link",
+      "description": "Update destination, slug, note, UTM fields, or disabled flag for a link id.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "disabled": {
+            "type": "boolean"
+          },
+          "utm_source": {
+            "type": "string"
+          },
+          "utm_medium": {
+            "type": "string"
+          },
+          "utm_campaign": {
+            "type": "string"
+          },
+          "utm_term": {
+            "type": "string"
+          },
+          "utm_content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "annotations": {
+        "title": "Update link",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "disable_link",
+      "description": "Disable a short link so it no longer redirects. Pass disabled=false to re-enable. Destructive: visitors will get an error instead of the destination.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "disabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "annotations": {
+        "title": "Disable link",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "delete_link",
+      "description": "Permanently delete a short link. This cannot be undone.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "annotations": {
+        "title": "Delete link",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_qr",
+      "description": "Download a QR code for a link. format=png|svg, optional color, logo, print.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "boolean"
+          },
+          "print": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "annotations": {
+        "title": "Get QR code",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_link_stats",
+      "description": "Click statistics for one link id. Optional from/to (YYYY-MM-DD) and the usual country/device/referrer/daily breakdowns.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "annotations": {
+        "title": "Link stats",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_analytics",
+      "description": "Account-level analytics overview.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "title": "Analytics",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    }
+  ],
+  "version": "1.0.4"
+}

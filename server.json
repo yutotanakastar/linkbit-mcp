@@ -8,12 +8,12 @@
     "url": "https://github.com/yutotanakastar/linkbit-mcp",
     "source": "github"
   },
-  "version": "1.0.2",
+  "version": "1.0.4",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "linkbit-mcp",
-      "version": "1.0.2",
+      "version": "1.0.4",
       "transport": {
         "type": "stdio"
       },

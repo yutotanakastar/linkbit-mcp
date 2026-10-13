@@ -265,8 +265,12 @@ async function handle(message) {
     reply(id, { tools });
     return;
   }
-  if (method === "resources/list" || method === "resources/templates/list") {
+  if (method === "resources/list") {
     reply(id, { resources: [] });
+    return;
+  }
+  if (method === "resources/templates/list") {
+    reply(id, { resourceTemplates: [] });
     return;
   }
   if (method === "prompts/list") {
