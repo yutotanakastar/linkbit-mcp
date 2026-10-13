@@ -1,6 +1,7 @@
 # linkbit-mcp
 
 [![HOL Guard Scanner](https://img.shields.io/badge/HOL%20Guard-passing-00a67e)](https://github.com/hashgraph-online/hol-guard)
+[![AllMCPs Verified](https://allmcps.com/api/badge/linkbit-mcp?style=shield)](https://allmcps.com/mcp/linkbit-mcp)
 
 
 MCP server for [LinkBit](https://linkbit.live): shorten links, bulk create, QR codes, and click analytics from Claude, ChatGPT, Cursor, and n8n.
