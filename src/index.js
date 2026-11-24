@@ -13,23 +13,29 @@ const API_KEY = process.env.API_KEY || "";
 const NAME = process.env.APP_NAME || "LinkBit";
 
 const utmProps = {
-  utm_source: { type: "string" },
-  utm_medium: { type: "string" },
-  utm_campaign: { type: "string" },
-  utm_term: { type: "string" },
-  utm_content: { type: "string" },
+  utm_source: { type: "string", description: "UTM source, e.g. newsletter. Added to the destination URL." },
+  utm_medium: { type: "string", description: "UTM medium, e.g. email. Added to the destination URL." },
+  utm_campaign: { type: "string", description: "UTM campaign name. Added to the destination URL." },
+  utm_term: { type: "string", description: "UTM term (paid keyword). Added to the destination URL." },
+  utm_content: { type: "string", description: "UTM content (ad or link variant). Added to the destination URL." },
+};
+
+const idProp = {
+  type: "string",
+  description: "Link id (UUID) as returned by shorten_url, shorten_urls or list_links.",
 };
 
 const tools = [
   {
     name: "shorten_url",
-    description: "Create a short URL. Optional UTM fields are merged without overwriting existing utm_* params.",
+    description:
+      "Create one short link on linkbit.live for a destination URL. Returns the short URL and the link id. Optional UTM fields are merged into the destination without overwriting utm_* params it already has; a #fragment is kept. Fails on an invalid or unsafe URL, a slug that is taken, or when the daily create limit is reached.",
     inputSchema: {
       type: "object",
       properties: {
-        destination: { type: "string" },
-        slug: { type: "string" },
-        note: { type: "string" },
+        destination: { type: "string", description: "Full http(s) URL to redirect to." },
+        slug: { type: "string", description: "Custom slug for the short URL. A random one is used when omitted." },
+        note: { type: "string", description: "Private note for your own reference. Not shown to visitors." },
         ...utmProps,
       },
       required: ["destination"],
@@ -38,17 +44,19 @@ const tools = [
   },
   {
     name: "shorten_urls",
-    description: "Bulk-create short URLs. Each item may include slug and utm_* fields.",
+    description:
+      "Create several short links in one call. Each item follows the same rules as shorten_url. Items that fail do not stop the others: the response lists the created links and the errors separately.",
     inputSchema: {
       type: "object",
       properties: {
         urls: {
           type: "array",
+          description: "Links to create, one object per link.",
           items: {
             type: "object",
             properties: {
-              destination: { type: "string" },
-              slug: { type: "string" },
+              destination: { type: "string", description: "Full http(s) URL to redirect to." },
+              slug: { type: "string", description: "Custom slug. A random one is used when omitted." },
               ...utmProps,
             },
             required: ["destination"],
@@ -61,21 +69,23 @@ const tools = [
   },
   {
     name: "list_links",
-    description: "List the authenticated user's short links.",
+    description:
+      "List all short links of the account that owns the API key, newest first, with their ids, slugs and destinations. Use it to find a link id for the other tools. Read-only.",
     inputSchema: { type: "object", properties: {} },
     annotations: { title: "List links", readOnlyHint: true, destructiveHint: false, openWorldHint: true },
   },
   {
     name: "update_link",
-    description: "Update destination, slug, note, UTM fields, or disabled flag for a link id.",
+    description:
+      "Change an existing link: its destination, slug, note, UTM fields or the disabled flag. Only the fields you pass are changed. Changing the slug changes the short URL, so old copies of it stop working.",
     inputSchema: {
       type: "object",
       properties: {
-        id: { type: "string" },
-        destination: { type: "string" },
-        slug: { type: "string" },
-        note: { type: "string" },
-        disabled: { type: "boolean" },
+        id: idProp,
+        destination: { type: "string", description: "New destination URL." },
+        slug: { type: "string", description: "New slug. The short URL changes with it." },
+        note: { type: "string", description: "New private note." },
+        disabled: { type: "boolean", description: "true stops the redirect, false turns it back on." },
         ...utmProps,
       },
       required: ["id"],
@@ -89,8 +99,8 @@ const tools = [
     inputSchema: {
       type: "object",
       properties: {
-        id: { type: "string" },
-        disabled: { type: "boolean" },
+        id: idProp,
+        disabled: { type: "boolean", description: "Default true (disable). Pass false to re-enable the link." },
       },
       required: ["id"],
     },
@@ -107,7 +117,7 @@ const tools = [
     description: "Permanently delete a short link. This cannot be undone.",
     inputSchema: {
       type: "object",
-      properties: { id: { type: "string" } },
+      properties: { id: idProp },
       required: ["id"],
     },
     annotations: {
@@ -120,15 +130,16 @@ const tools = [
   },
   {
     name: "get_qr",
-    description: "Download a QR code for a link. format=png|svg, optional color, logo, print.",
+    description:
+      "Generate a QR code image that opens the short link. The image is returned as an image block. Read-only: it does not change the link.",
     inputSchema: {
       type: "object",
       properties: {
-        id: { type: "string" },
-        format: { type: "string" },
-        color: { type: "string" },
-        logo: { type: "boolean" },
-        print: { type: "boolean" },
+        id: idProp,
+        format: { type: "string", enum: ["png", "svg"], description: "Image format. Defaults to png." },
+        color: { type: "string", description: "Optional QR color." },
+        logo: { type: "boolean", description: "Put the LinkBit logo in the center of the code." },
+        print: { type: "boolean", description: "Use the print-oriented variant of the code." },
       },
       required: ["id"],
     },
@@ -136,13 +147,14 @@ const tools = [
   },
   {
     name: "get_link_stats",
-    description: "Click statistics for one link id. Optional from/to (YYYY-MM-DD) and the usual country/device/referrer/daily breakdowns.",
+    description:
+      "Click statistics for one link, with breakdowns by country, device, referrer and day. Optionally limit the date range. For all links at once use get_analytics. Read-only.",
     inputSchema: {
       type: "object",
       properties: {
-        id: { type: "string" },
-        from: { type: "string" },
-        to: { type: "string" },
+        id: idProp,
+        from: { type: "string", description: "Start date, YYYY-MM-DD." },
+        to: { type: "string", description: "End date, YYYY-MM-DD." },
       },
       required: ["id"],
     },
@@ -150,7 +162,8 @@ const tools = [
   },
   {
     name: "get_analytics",
-    description: "Account-level analytics overview.",
+    description:
+      "Analytics for the whole account across all links: total clicks, unique visitors, link count, top links, and breakdowns by day, country, device and referrer. For a single link use get_link_stats. Read-only.",
     inputSchema: { type: "object", properties: {} },
     annotations: { title: "Analytics", readOnlyHint: true, destructiveHint: false, openWorldHint: true },
   },
