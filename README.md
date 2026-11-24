@@ -5,7 +5,6 @@
 [![MCP Trust Score](https://mcptrustchecker.com/registry/linkbit-mcp/badge.svg)](https://mcptrustchecker.com/registry/linkbit-mcp)
 [![linkbit-mcp MCP server](https://glama.ai/mcp/servers/yutotanakastar/linkbit-mcp/badges/score.svg)](https://glama.ai/mcp/servers/yutotanakastar/linkbit-mcp)
 
-
 MCP server for [LinkBit](https://linkbit.live): shorten links, bulk create, QR codes, and click analytics from Claude, ChatGPT, Cursor, and n8n.
 
 Public docs: [linkbit.live/docs](https://linkbit.live/docs) · [linkbit.live/mcp](https://linkbit.live/mcp)
@@ -84,8 +83,8 @@ n8n, Make, and custom agents can also call `/api/v1` with the same headers.
 
 ## Local development (ShortLinks monorepo)
 
-Для правок пакета в этом репозитории (вместо `npx -y linkbit-mcp`):
+Until `npm publish`, Cursor can run the copy in this folder:
 
 1. Copy `mcp/cursor.mcp.json.example` to **`.cursor/mcp.json`** (gitignored) or `~/.cursor/mcp.json`.
 2. Paste the `slk_…` key into `env.API_KEY`.
-3. Use `"command": "node"` and `"args": ["mcp/src/index.js"]`.
+3. For this repo before publish, use `"command": "node"` and `"args": ["mcp/src/index.js"]`.
