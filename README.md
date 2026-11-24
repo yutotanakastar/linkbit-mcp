@@ -3,7 +3,7 @@
 [![HOL Guard Scanner](https://img.shields.io/badge/HOL%20Guard-passing-00a67e)](https://github.com/hashgraph-online/hol-guard)
 [![AllMCPs Verified](https://allmcps.com/api/badge/linkbit-mcp)](https://allmcps.com/mcp/linkbit-mcp?verify=5087a51f-e410-4dca-8101-3091a8a00ab0)
 [![MCP Trust Score](https://mcptrustchecker.com/registry/linkbit-mcp/badge.svg)](https://mcptrustchecker.com/registry/linkbit-mcp)
-
+[![linkbit-mcp MCP server](https://glama.ai/mcp/servers/yutotanakastar/linkbit-mcp/badges/score.svg)](https://glama.ai/mcp/servers/yutotanakastar/linkbit-mcp)
 
 MCP server for [LinkBit](https://linkbit.live): shorten links, bulk create, QR codes, and click analytics from Claude, ChatGPT, Cursor, and n8n.
 
